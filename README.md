@@ -1,6 +1,6 @@
 # README
 
-![Demo](app/assets/images/gif_readme.gif)
+![Demo](app/assets/images/gif_readme_with_zip.gif)
 
 Before running the application, you must set the following environment variables for API access at `.env` file:
 
