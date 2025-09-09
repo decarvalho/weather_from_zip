@@ -21,6 +21,7 @@ class WeatherController < ApplicationController
       api_hash = FetcherApiService.new(query).call
       api_hash
     end
+    return [] if data.blank? && api_hash.blank?
 
     return data.push(:cache_hit) if api_hash.blank?
 
