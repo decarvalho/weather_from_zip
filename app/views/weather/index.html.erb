@@ -2,66 +2,9 @@
 	<h1> Search for some weather </h1>
 
 	<%= form_tag(search_path, method: :get) do %>
-  	<%= text_field_tag(:query, params[:query], placeholder: "Enter address") %>
+	<%= text_field_tag(:query, params[:query], placeholder: "Enter address") %>
 	<% end %>
 
 	<div id="suggestions"></div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('query');
-      const suggestionsDiv = document.getElementById('suggestions');
-			let isFetching = false;
-
-			let typingTimer;
-			const doneTypingInterval = 800;
-
-			searchInput.addEventListener('keyup', () => {
-					clearTimeout(typingTimer);
-					if (searchInput.value) {
-						typingTimer = setTimeout(fetchSuggestions, doneTypingInterval);
-					}
-			});
-
-			async function fetchSuggestions() {
-				const query = searchInput.value;
-				if (isFetching) {
-					return;
-				}
-
-        if (query.length > 2) {
-					isFetching = true;
-					try {
-						suggestionsDiv.innerHTML = '';
-						const loadingItem = document.createElement('div');
-						loadingItem.textContent = `Loading weather for address = ${query}...`;
-						suggestionsDiv.appendChild(loadingItem);
-						const response = await fetch(`/suggestions?query=${query}`);
-						const suggestions = await response.json();
-						
-						suggestionsDiv.innerHTML = '';
-						const dataSource = suggestions.pop();
-						loadingItem.textContent = `${dataSource}`;
-						suggestionsDiv.appendChild(loadingItem);
-						suggestions.forEach(suggestion => {
-							const suggestionItem = document.createElement('div');
-							console.log(suggestion.name);
-							console.log(suggestion.country);
-							suggestionItem.textContent = `Name: ${suggestion.name},
-														Current Temperature: ${suggestion.current_temp},
-														Min Temperature: ${suggestion.min_temp},
-														Max Temperature: ${suggestion.max_temp},
-														Requested Time: ${suggestion.requested_time}`;
-							suggestionsDiv.appendChild(suggestionItem);
-						});
-					} catch {
-						suggestionsDiv.innerHTML = '';
-					} finally {
-						isFetching = false;
-					}
-        } else {
-          suggestionsDiv.innerHTML = '';
-        }
-			};
-    });
-  </script>
+  <%= javascript_include_tag 'weather_fetch.js' %>
 </div>
