@@ -320,7 +320,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
-  error_highlight (>= 0.4.0)
+  error_highlight (~> 0.7.0)
   importmap-rails
   jbuilder
   puma (>= 5.0)
